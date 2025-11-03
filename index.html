@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shastho Shohayika - Health Dashboard</title>
+    <style>
+        :root {
+            --primary: #2c7fb8;
+            --primary-light: #6baed6;
+            --secondary: #41ab5d;
+            --secondary-light: #74c476;
+            --accent: #f03b20;
+            --light: #f7f7f7;
+            --dark: #252525;
+            --gray: #969696;
+            --gray-light: #e1e1e1;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f9fc;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(to bottom, var(--primary), var(--primary-light));
+            color: white;
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+            z-index: 100;
+        }
+
+        .logo {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .logo span {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid white;
+        }
+
+        .nav-item i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .header h2 {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Dashboard Cards */
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-light);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-content {
+            color: var(--dark);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Mission Sections */
+        .mission-section {
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .mission-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .mission-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        .mission-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .mission-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .mission-solution, .mission-riddle {
+            padding: 15px;
+            border-radius: var(--radius);
+            background-color: #f9f9f9;
+        }
+
+        .mission-solution h4, .mission-riddle h4 {
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+            }
+            
+            .nav-menu {
+                display: flex;
+                overflow-x: auto;
+            }
+            
+            .nav-item {
+                white-space: nowrap;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mission-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <h1>Shastho Shohayika</h1>
+                <span>Community Health Dashboard</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item active">
+                    <i>📊</i> Dashboard
+                </li>
+                <li class="nav-item">
+                    <i>🗺️</i> Health Map
+                </li>
+                <li class="nav-item">
+                    <i>👥</i> Community
+                </li>
+                <li class="nav-item">
+                    <i>📈</i> Analytics
+                </li>
+                <li class="nav-item">
+                    <i>⚙️</i> Settings
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h2>Community Health Dashboard</h2>
+                <div class="user-info">
+                    <div class="user-avatar">AM</div>
+                    <span>Admin User</span>
+                </div>
+            </div>
+
+            <!-- Stats Section -->
+            <div class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-value">1,247</div>
+                    <div class="stat-label">Daily Check-ins</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">342</div>
+                    <div class="stat-label">Help Requests</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">89</div>
+                    <div class="stat-label">Active Volunteers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">64</div>
+                    <div class="stat-label">Health Events</div>
+                </div>
+            </div>
+
+            <!-- Dashboard Cards -->
+            <div class="dashboard-cards">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Voice Assistant</div>
+                        <div class="card-icon">🎤</div>
+                    </div>
+                    <div class="card-content">
+                        <p>Interactive voice-first health assistant ready to help users with health queries, facility location, and symptom guidance.</p>
+                        <button style="margin-top: 15px; padding: 8px 15px; background-color: var(--primary); color: white; border: none; border-radius: var(--radius); cursor: pointer;">Activate Assistant</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Health Map</div>
+                        <div class="card-icon">🗺️</div>
+                    </div>
+                    <div class="card-content">
+                        <p>Interactive map showing health facilities, community health workers, and transport information for remote areas.</p>
+                        <button style="margin-top: 15px; padding: 8px 15px; background-color: var(--primary); color: white; border: none; border-radius: var(--radius); cursor: pointer;">View Map</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Help Requests</div>
+                        <div class="card-icon">🆘</div>
+                    </div>
+                    <div class="card-content">
+                        <p>Anonymous help request system with 342 pending requests. 85% responded to within 48 hours.</p>
+                        <button style="margin-top: 15px; padding: 8px 15px; background-color: var(--primary); color: white; border: none; border-radius: var(--radius); cursor: pointer;">View Requests</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mission 1 -->
+            <div class="mission-section">
+                <div class="mission-header">
+                    <div class="mission-number">1</div>
+                    <div class="mission-title">Hablu's Reality Check</div>
+                </div>
+                <div class="mission-content">
+                    <div class="mission-solution">
+                        <h4>Solution</h4>
+                        <p>Simple, calming home screen with "আজকে কেমন আছেন?" button. Voice/pictorial mood check-in with no shaming for missed days.</p>
+                    </div>
+                    <div class="mission-riddle">
+                        <h4>Riddle Solution (3 days offline)</h4>
+                        <p>Non-judgmental message: "আপনাকে আবার দেখে ভালো লাগলো! আমরা আপনার জন্য এখানে আছি।" (Good to see you back! We are here for you.)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mission 2 -->
+            <div class="mission-section">
+                <div class="mission-header">
+                    <div class="mission-number">2</div>
+                    <div class="mission-title">Community Health Map</div>
+                </div>
+                <div class="mission-content">
+                    <div class="mission-solution">
+                        <h4>Solution</h4>
+                        <p>Hybrid map/list view. Shows clinics, hospitals, pharmacies, and community health workers with mental health training.</p>
+                    </div>
+                    <div class="mission-riddle">
+                        <h4>Riddle Solution (Two villages, one clinic)</h4>
+                        <p>Shows transport info: "🚌 Bus available every hour" vs "⛵ Boat access required" for practical accessibility measurement.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mission 3 -->
+            <div class="mission-section">
+                <div class="mission-header">
+                    <div class="mission-number">3</div>
+                    <div class="mission-title">Anonymous Help Request</div>
+                </div>
+                <div class="mission-content">
+                    <div class="mission-solution">
+                        <h4>Solution</h4>
+                        <p>Simple form with no identifying fields. Clear consent message and confirmation ID upon submission.</p>
+                    </div>
+                    <div class="mission-riddle">
+                        <h4>Riddle Solution (Building Trust)</h4>
+                        <p>Calm UI with shield/lock icons. Transparent process explanation. Non-intrusive first contact from volunteers.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional missions would follow the same pattern -->
+            
+            <!-- Mission 10 -->
+            <div class="mission-section">
+                <div class="mission-header">
+                    <div class="mission-number">10</div>
+                    <div class="mission-title">Voice-First Health Assistant</div>
+                </div>
+                <div class="mission-content">
+                    <div class="mission-solution">
+                        <h4>Solution</h4>
+                        <p>Primary interface listens and responds in Bangla. Commands: "হাসপাতাল খুঁজুন", "আমার মন খারাপ", "টিকা এর সময়সূচী দেখান".</p>
+                    </div>
+                    <div class="mission-riddle">
+                        <h4>Riddle Solution (Dialects & Mishearing)</h4>
+                        <p>Context-aware interpretation with confirmation. Fallback to list selection when confidence is low.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple interactivity for the dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navigation menu interaction
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    navItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Card hover effects
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
