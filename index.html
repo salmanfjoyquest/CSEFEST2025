@@ -1,24 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shastho Shohayika - Health Dashboard</title>
+    <title>MonBondhu - আপনার মনের বন্ধু</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --primary: #2c7fb8;
-            --primary-light: #6baed6;
-            --secondary: #41ab5d;
-            --secondary-light: #74c476;
-            --accent: #f03b20;
-            --light: #f7f7f7;
-            --dark: #252525;
-            --gray: #969696;
-            --gray-light: #e1e1e1;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --radius: 8px;
-        }
-
+        /* Reset and Base Styles */
         * {
             margin: 0;
             padding: 0;
@@ -26,456 +14,898 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        :root {
+            --primary: #2E8B57;
+            --primary-light: #4CAF7D;
+            --primary-dark: #1B5E3A;
+            --secondary: #FF9800;
+            --light: #F8F9FA;
+            --dark: #343A40;
+            --gray: #6C757D;
+            --danger: #DC3545;
+            --success: #28A745;
+            --warning: #FFC107;
+            --info: #17A2B8;
+        }
+
         body {
-            background-color: #f5f9fc;
-            color: var(--dark);
+            background-color: #f5f5f5;
+            color: #333;
             line-height: 1.6;
         }
 
-        .container {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* Sidebar Styles */
-        .sidebar {
-            width: 250px;
-            background: linear-gradient(to bottom, var(--primary), var(--primary-light));
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            padding: 20px 0;
-            box-shadow: var(--shadow);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
             z-index: 100;
         }
 
-        .logo {
-            padding: 0 20px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            margin-bottom: 20px;
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .logo h1 {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        .logo span {
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-
-        .nav-menu {
-            list-style: none;
-        }
-
-        .nav-item {
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .nav-item:hover, .nav-item.active {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-left: 4px solid white;
-        }
-
-        .nav-item i {
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-
-        /* Main Content Styles */
-        .main-content {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .header {
+        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--gray-light);
         }
 
-        .header h2 {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .user-info {
+        .logo {
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        /* Dashboard Cards */
-        .dashboard-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .card {
-            background-color: white;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 20px;
-            transition: transform 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--primary);
-        }
-
-        .card-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--primary-light);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .card-content {
-            color: var(--dark);
-        }
-
-        /* Stats Section */
-        .stats-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background-color: white;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 20px;
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 2rem;
+        .logo h1 {
+            font-size: 1.8rem;
             font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 5px;
         }
 
-        .stat-label {
-            color: var(--gray);
-            font-size: 0.9rem;
+        .logo-icon {
+            font-size: 2rem;
         }
 
-        /* Mission Sections */
-        .mission-section {
-            background-color: white;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 25px;
-            margin-bottom: 30px;
-        }
-
-        .mission-header {
+        .nav-menu {
             display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--gray-light);
+            list-style: none;
+            gap: 1.5rem;
         }
 
-        .mission-number {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background-color: var(--primary);
+        .nav-menu a {
             color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            font-weight: bold;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+            position: relative;
         }
 
-        .mission-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--primary);
-        }
-
-        .mission-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .mission-solution, .mission-riddle {
-            padding: 15px;
-            border-radius: var(--radius);
-            background-color: #f9f9f9;
-        }
-
-        .mission-solution h4, .mission-riddle h4 {
-            margin-bottom: 10px;
+        .nav-menu a:hover {
             color: var(--secondary);
         }
 
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .container {
-                flex-direction: column;
-            }
-            
-            .sidebar {
-                width: 100%;
-                height: auto;
-            }
-            
-            .nav-menu {
-                display: flex;
-                overflow-x: auto;
-            }
-            
-            .nav-item {
-                white-space: nowrap;
-            }
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary);
+            transition: width 0.3s ease;
         }
 
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-hero {
+            background-color: var(--secondary);
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        .btn-hero:hover {
+            background-color: #e68900;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 4rem 0;
+            background-color: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background-color: var(--light);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        /* Mood Tracker Section */
+        .mood-tracker {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+        }
+
+        .mood-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .mood-tracker h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+        }
+
+        .mood-options {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .mood-option {
+            text-align: center;
+            cursor: pointer;
+            padding: 1rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 120px;
+            border: 2px solid transparent;
+        }
+
+        .mood-option:hover {
+            transform: scale(1.05);
+            background-color: var(--light);
+        }
+
+        .mood-option.active {
+            border-color: var(--primary);
+            background-color: rgba(46, 139, 87, 0.1);
+        }
+
+        .mood-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .mood-history {
+            margin-top: 2rem;
+        }
+
+        .mood-history h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .mood-chart {
+            display: flex;
+            align-items: flex-end;
+            height: 150px;
+            gap: 10px;
+            padding: 1rem;
+            background-color: var(--light);
+            border-radius: 10px;
+        }
+
+        .mood-bar {
+            flex: 1;
+            background: linear-gradient(to top, var(--primary), var(--primary-light));
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            min-height: 20px;
+        }
+
+        .mood-bar-label {
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        /* Health Map Section */
+        .health-map {
+            padding: 4rem 0;
+            background-color: white;
+        }
+
+        .map-container {
+            background-color: var(--light);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-top: 2rem;
+        }
+
+        .map-placeholder {
+            height: 400px;
+            background: linear-gradient(135deg, #a8e6cf, #dcedc1);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--primary-dark);
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .facility-list {
+            margin-top: 2rem;
+        }
+
+        .facility-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            gap: 1rem;
+        }
+
+        .facility-item:last-child {
+            border-bottom: none;
+        }
+
+        .facility-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .facility-info h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        .facility-distance {
+            margin-left: auto;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        /* Health Tips Section */
+        .health-tips {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+        }
+
+        .tips-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .tip-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .tip-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .tip-header {
+            padding: 1.5rem;
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .tip-body {
+            padding: 1.5rem;
+        }
+
+        .tip-body ul {
+            padding-left: 1.5rem;
+        }
+
+        .tip-body li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Emergency Help Section */
+        .emergency-help {
+            padding: 4rem 0;
+            background-color: white;
+        }
+
+        .help-container {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-radius: 15px;
+            padding: 3rem;
+            text-align: center;
+            color: white;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+        }
+
+        .help-container h2 {
+            margin-bottom: 1rem;
+        }
+
+        .help-container p {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .btn-emergency {
+            background-color: white;
+            color: #ff6b6b;
+            font-size: 1.2rem;
+            padding: 1rem 2.5rem;
+        }
+
+        .btn-emergency:hover {
+            background-color: #f8f9fa;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .mission-content {
-                grid-template-columns: 1fr;
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
             }
-            
-            .dashboard-cards {
-                grid-template-columns: 1fr;
+
+            .nav-menu {
+                flex-direction: column;
+                text-align: center;
+                display: none;
+                width: 100%;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                right: 1rem;
+                top: 1rem;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .mood-options {
+                justify-content: center;
+            }
+
+            .mood-option {
+                min-width: 100px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <div class="logo">
-                <h1>Shastho Shohayika</h1>
-                <span>Community Health Dashboard</span>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">💚</span>
+                    <h1>MonBondhu</h1>
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#home">হোম</a></li>
+                    <li><a href="#features">সেবাসমূহ</a></li>
+                    <li><a href="#mood-tracker">মুড ট্র্যাকার</a></li>
+                    <li><a href="#health-map">স্বাস্থ্য মানচিত্র</a></li>
+                    <li><a href="#health-tips">স্বাস্থ্য টিপস</a></li>
+                    <li><a href="#emergency-help">জরুরি সাহায্য</a></li>
+                </ul>
             </div>
-            <ul class="nav-menu">
-                <li class="nav-item active">
-                    <i>📊</i> Dashboard
-                </li>
-                <li class="nav-item">
-                    <i>🗺️</i> Health Map
-                </li>
-                <li class="nav-item">
-                    <i>👥</i> Community
-                </li>
-                <li class="nav-item">
-                    <i>📈</i> Analytics
-                </li>
-                <li class="nav-item">
-                    <i>⚙️</i> Settings
-                </li>
-            </ul>
         </div>
+    </header>
 
-        <!-- Main Content -->
-        <div class="main-content">
-            <div class="header">
-                <h2>Community Health Dashboard</h2>
-                <div class="user-info">
-                    <div class="user-avatar">AM</div>
-                    <span>Admin User</span>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h2>আপনার মনের বন্ধু, গ্রামীণ বাংলাদেশের জন্য</h2>
+                <p>মনবন্ধু একটি সহজ, সাংস্কৃতিকভাবে উপযুক্ত ডিজিটাল প্ল্যাটফর্ম যা বাংলাদেশের গ্রামীণ সম্প্রদায়কে মানসিক স্বাস্থ্য সহায়তা, কাছাকাছি ক্লিনিক খুঁজে পাওয়া, প্রতিরোধমূলক যত্ন সম্পর্কে জানা এবং মাতৃ ও শিশু স্বাস্থ্য চাহিদা ট্র্যাক করতে সহায়তা করে।</p>
+                <a href="#features" class="btn btn-hero">আমাদের সেবা সমূহ</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>আমাদের সেবাসমূহ</h2>
+                <p>মনবন্ধু গ্রামীণ বাংলাদেশের জন্য তৈরি করা একটি সম্পূর্ণ স্বাস্থ্য সমাধান</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-smile"></i></div>
+                    <h3>মানসিক স্বাস্থ্য চেক-ইন</h3>
+                    <p>প্রতিদিনের মেজাজ এবং স্ট্রেস চেক-ইন বৈশিষ্ট্য যা সাংস্কৃতিকভাবে উপযুক্ত বাংলা প্রম্পট ব্যবহার করে।</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-map-marked-alt"></i></div>
+                    <h3>কমিউনিটি স্বাস্থ্য মানচিত্র</h3>
+                    <p>গ্রামীণ বাংলাদেশ জুড়ে স্বাস্থ্যসেবা সুবিধাগুলি প্রদর্শনকারী একটি ম্যাপিং সমাধান।</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-user-secret"></i></div>
+                    <h3>বেনামী সাহায্য অনুরোধ</h3>
+                    <p>ব্যক্তিগত পরিচয় প্রকাশ না করে মানসিক স্বাস্থ্য সহায়তা চাওয়ার একটি গোপনীয় ব্যবস্থা।</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-cloud-sun"></i></div>
+                    <h3>মৌসুমী স্বাস্থ্য টিপস</h3>
+                    <p>বাংলাদেশের জলবায়ু অনুযায়ী মৌসুমভিত্তিক স্বাস্থ্য বিষয়বস্তু সরবরাহ।</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-baby"></i></div>
+                    <h3>মাতৃ ও শিশু স্বাস্থ্য</h3>
+                    <p>প্রসবপূর্ব যত্ন পরিদর্শনের অনুস্মারক এবং শিশু টিকাদান সময়সূচী ব্যবস্থাপনা।</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-stethoscope"></i></div>
+                    <h3>লক্ষণ সচেতনতা</h3>
+                    <p>উদ্বেগজনক লক্ষণগুলি চিনতে এবং পেশাদার চিকিৎসা সহায়তা নেওয়ার সময় বুঝতে সাহায্য করে।</p>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- Stats Section -->
-            <div class="stats-section">
-                <div class="stat-card">
-                    <div class="stat-value">1,247</div>
-                    <div class="stat-label">Daily Check-ins</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">342</div>
-                    <div class="stat-label">Help Requests</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">89</div>
-                    <div class="stat-label">Active Volunteers</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">64</div>
-                    <div class="stat-label">Health Events</div>
-                </div>
-            </div>
-
-            <!-- Dashboard Cards -->
-            <div class="dashboard-cards">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Voice Assistant</div>
-                        <div class="card-icon">🎤</div>
+    <!-- Mood Tracker Section -->
+    <section class="mood-tracker" id="mood-tracker">
+        <div class="container">
+            <div class="mood-container">
+                <h2>আজ আপনার মন কেমন?</h2>
+                <div class="mood-options">
+                    <div class="mood-option" data-mood="very-happy">
+                        <div class="mood-icon">😄</div>
+                        <div>খুব খুশি</div>
                     </div>
-                    <div class="card-content">
-                        <p>Interactive voice-first health assistant ready to help users with health queries, facility location, and symptom guidance.</p>
-                        <button style="margin-top: 15px; padding: 8px 15px; background-color: var(--primary); color: white; border: none; border-radius: var(--radius); cursor: pointer;">Activate Assistant</button>
+                    <div class="mood-option" data-mood="happy">
+                        <div class="mood-icon">😊</div>
+                        <div>খুশি</div>
+                    </div>
+                    <div class="mood-option" data-mood="neutral">
+                        <div class="mood-icon">😐</div>
+                        <div>স্বাভাবিক</div>
+                    </div>
+                    <div class="mood-option" data-mood="sad">
+                        <div class="mood-icon">😔</div>
+                        <div>খারাপ</div>
+                    </div>
+                    <div class="mood-option" data-mood="very-sad">
+                        <div class="mood-icon">😢</div>
+                        <div>খুব খারাপ</div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Health Map</div>
-                        <div class="card-icon">🗺️</div>
-                    </div>
-                    <div class="card-content">
-                        <p>Interactive map showing health facilities, community health workers, and transport information for remote areas.</p>
-                        <button style="margin-top: 15px; padding: 8px 15px; background-color: var(--primary); color: white; border: none; border-radius: var(--radius); cursor: pointer;">View Map</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Help Requests</div>
-                        <div class="card-icon">🆘</div>
-                    </div>
-                    <div class="card-content">
-                        <p>Anonymous help request system with 342 pending requests. 85% responded to within 48 hours.</p>
-                        <button style="margin-top: 15px; padding: 8px 15px; background-color: var(--primary); color: white; border: none; border-radius: var(--radius); cursor: pointer;">View Requests</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Mission 1 -->
-            <div class="mission-section">
-                <div class="mission-header">
-                    <div class="mission-number">1</div>
-                    <div class="mission-title">Hablu's Reality Check</div>
-                </div>
-                <div class="mission-content">
-                    <div class="mission-solution">
-                        <h4>Solution</h4>
-                        <p>Simple, calming home screen with "আজকে কেমন আছেন?" button. Voice/pictorial mood check-in with no shaming for missed days.</p>
-                    </div>
-                    <div class="mission-riddle">
-                        <h4>Riddle Solution (3 days offline)</h4>
-                        <p>Non-judgmental message: "আপনাকে আবার দেখে ভালো লাগলো! আমরা আপনার জন্য এখানে আছি।" (Good to see you back! We are here for you.)</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Mission 2 -->
-            <div class="mission-section">
-                <div class="mission-header">
-                    <div class="mission-number">2</div>
-                    <div class="mission-title">Community Health Map</div>
-                </div>
-                <div class="mission-content">
-                    <div class="mission-solution">
-                        <h4>Solution</h4>
-                        <p>Hybrid map/list view. Shows clinics, hospitals, pharmacies, and community health workers with mental health training.</p>
-                    </div>
-                    <div class="mission-riddle">
-                        <h4>Riddle Solution (Two villages, one clinic)</h4>
-                        <p>Shows transport info: "🚌 Bus available every hour" vs "⛵ Boat access required" for practical accessibility measurement.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Mission 3 -->
-            <div class="mission-section">
-                <div class="mission-header">
-                    <div class="mission-number">3</div>
-                    <div class="mission-title">Anonymous Help Request</div>
-                </div>
-                <div class="mission-content">
-                    <div class="mission-solution">
-                        <h4>Solution</h4>
-                        <p>Simple form with no identifying fields. Clear consent message and confirmation ID upon submission.</p>
-                    </div>
-                    <div class="mission-riddle">
-                        <h4>Riddle Solution (Building Trust)</h4>
-                        <p>Calm UI with shield/lock icons. Transparent process explanation. Non-intrusive first contact from volunteers.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Additional missions would follow the same pattern -->
-            
-            <!-- Mission 10 -->
-            <div class="mission-section">
-                <div class="mission-header">
-                    <div class="mission-number">10</div>
-                    <div class="mission-title">Voice-First Health Assistant</div>
-                </div>
-                <div class="mission-content">
-                    <div class="mission-solution">
-                        <h4>Solution</h4>
-                        <p>Primary interface listens and responds in Bangla. Commands: "হাসপাতাল খুঁজুন", "আমার মন খারাপ", "টিকা এর সময়সূচী দেখান".</p>
-                    </div>
-                    <div class="mission-riddle">
-                        <h4>Riddle Solution (Dialects & Mishearing)</h4>
-                        <p>Context-aware interpretation with confirmation. Fallback to list selection when confidence is low.</p>
+                <div class="mood-history">
+                    <h3>গত সপ্তাহের মেজাজ ট্রেন্ড</h3>
+                    <div class="mood-chart">
+                        <div class="mood-bar" style="height: 80%;">
+                            <div class="mood-bar-label">সোম</div>
+                        </div>
+                        <div class="mood-bar" style="height: 60%;">
+                            <div class="mood-bar-label">মঙ্গল</div>
+                        </div>
+                        <div class="mood-bar" style="height: 70%;">
+                            <div class="mood-bar-label">বুধ</div>
+                        </div>
+                        <div class="mood-bar" style="height: 90%;">
+                            <div class="mood-bar-label">বৃহস্পতি</div>
+                        </div>
+                        <div class="mood-bar" style="height: 50%;">
+                            <div class="mood-bar-label">শুক্র</div>
+                        </div>
+                        <div class="mood-bar" style="height: 75%;">
+                            <div class="mood-bar-label">শনি</div>
+                        </div>
+                        <div class="mood-bar" style="height: 85%;">
+                            <div class="mood-bar-label">রবি</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Health Map Section -->
+    <section class="health-map" id="health-map">
+        <div class="container">
+            <div class="section-title">
+                <h2>কাছাকাছি স্বাস্থ্য সুবিধা</h2>
+                <p>আপনার এলাকার নিকটবর্তী স্বাস্থ্যকেন্দ্র, ক্লিনিক এবং ফার্মেসি খুঁজুন</p>
+            </div>
+            <div class="map-container">
+                <div class="map-placeholder">
+                    <div>
+                        <i class="fas fa-map-marker-alt" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <p>আপনার বর্তমান অবস্থান অনুযায়ী স্বাস্থ্য সুবিধাগুলি দেখানো হচ্ছে</p>
+                        <p style="font-size: 0.9rem; margin-top: 1rem;">(অফলাইন মোডেও কাজ করে)</p>
+                    </div>
+                </div>
+                <div class="facility-list">
+                    <div class="facility-item">
+                        <div class="facility-icon"><i class="fas fa-hospital"></i></div>
+                        <div class="facility-info">
+                            <h4>চর কলাপাড়া কমিউনিটি ক্লিনিক</h4>
+                            <p>সকাল ৯টা - দুপুর ২টা (মঙ্গল ও বৃহস্পতিবার)</p>
+                        </div>
+                        <div class="facility-distance">২.৫ কিমি</div>
+                    </div>
+                    <div class="facility-item">
+                        <div class="facility-icon"><i class="fas fa-clinic-medical"></i></div>
+                        <div class="facility-info">
+                            <h4>উপজেলা স্বাস্থ্য কমপ্লেক্স</h4>
+                            <p>২৪/৭ জরুরি সেবা</p>
+                        </div>
+                        <div class="facility-distance">৮ কিমি</div>
+                    </div>
+                    <div class="facility-item">
+                        <div class="facility-icon"><i class="fas fa-pills"></i></div>
+                        <div class="facility-info">
+                            <h4>রহমান ফার্মেসি</h4>
+                            <p>সকাল ৮টা - রাত ১০টা</p>
+                        </div>
+                        <div class="facility-distance">১.২ কিমি</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Health Tips Section -->
+    <section class="health-tips" id="health-tips">
+        <div class="container">
+            <div class="section-title">
+                <h2>মৌসুমী স্বাস্থ্য টিপস</h2>
+                <p>বাংলাদেশের জলবায়ু ও মৌসুম অনুযায়ী স্বাস্থ্য সুরক্ষা</p>
+            </div>
+            <div class="tips-container">
+                <div class="tip-card">
+                    <div class="tip-header">
+                        <h3><i class="fas fa-umbrella"></i> বর্ষাকাল (জুন-সেপ্টেম্বর)</h3>
+                    </div>
+                    <div class="tip-body">
+                        <ul>
+                            <li>ডেঙ্গু প্রতিরোধে ঘরের আশেপাশে পানি জমতে দেবেন না</li>
+                            <li>মশারি ব্যবহার করুন</li>
+                            <li>পরিষ্কার পানি পান করুন</li>
+                            <li>বৃষ্টিতে ভিজলে দ্রুত শুকনো কাপড় পরুন</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-header">
+                        <h3><i class="fas fa-snowflake"></i> শীতকাল (ডিসেম্বর-ফেব্রুয়ারি)</h3>
+                    </div>
+                    <div class="tip-body">
+                        <ul>
+                            <li>গরম কাপড় পরুন</li>
+                            <li>শিশুদের নিউমোনিয়া থেকে সুরক্ষিত রাখুন</li>
+                            <li>পর্যাপ্ত গরম পানি পান করুন</li>
+                            <li>শুষ্ক ত্বকের যত্ন নিন</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-header">
+                        <h3><i class="fas fa-sun"></i> গ্রীষ্মকাল (মার্চ-মে)</h3>
+                    </div>
+                    <div class="tip-body">
+                        <ul>
+                            <li>পর্যাপ্ত পানি পান করুন</li>
+                            <li>হিট স্ট্রোক এড়াতে ছায়ায় থাকুন</li>
+                            <li>হালকা রঙের সুতি কাপড় পরুন</li>
+                            <li>ডায়রিয়া প্রতিরোধে খাবার সঠিকভাবে সংরক্ষণ করুন</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Help Section -->
+    <section class="emergency-help" id="emergency-help">
+        <div class="container">
+            <div class="help-container">
+                <h2>জরুরি মানসিক স্বাস্থ্য সহায়তা</h2>
+                <p>আপনি যদি মানসিকভাবে বিপর্যস্ত বোধ করেন, সাহায্য চাইতে দ্বিধা করবেন না। আমাদের বেনামী সহায়তা পরিষেবা আপনার পরিচয় গোপন রেখে আপনাকে প্রয়োজনীয় সহায়তা প্রদান করবে।</p>
+                <button class="btn btn-emergency">বেনামী সাহায্য চাই</button>
+                <p style="margin-top: 1.5rem; font-size: 0.9rem;">আমাদের স্বেচ্ছাসেবকরা ৪৮ ঘন্টার মধ্যে আপনার সাথে যোগাযোগ করবেন</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>মনবন্ধু</h3>
+                    <p>গ্রামীণ বাংলাদেশের জন্য একটি সম্পূর্ণ স্বাস্থ্য সমাধান। আপনার মনের বন্ধু, সর্বদা আপনার পাশে।</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>দ্রুত লিংক</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">হোম</a></li>
+                        <li><a href="#features">সেবাসমূহ</a></li>
+                        <li><a href="#mood-tracker">মুড ট্র্যাকার</a></li>
+                        <li><a href="#health-map">স্বাস্থ্য মানচিত্র</a></li>
+                        <li><a href="#health-tips">স্বাস্থ্য টিপস</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>যোগাযোগ</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> ইমেইল: info@monbondhu.org</li>
+                        <li><i class="fas fa-phone"></i> ফোন: +৮৮০ ১৭০০-১২৩৪৫৬</li>
+                        <li><i class="fas fa-map-marker-alt"></i> ঠিকানা: ঢাকা, বাংলাদেশ</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; ২০২৪ মনবন্ধু - সকল অধিকার সংরক্ষিত | ShasthoTech বাংলাদেশ লিমিটেড</p>
+            </div>
+        </div>
+    </footer>
 
     <script>
-        // Simple interactivity for the dashboard
-        document.addEventListener('DOMContentLoaded', function() {
-            // Navigation menu interaction
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    navItems.forEach(i => i.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
-            
-            // Card hover effects
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-5px)';
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Mood Tracker Functionality
+        const moodOptions = document.querySelectorAll('.mood-option');
+        moodOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                // Remove active class from all options
+                moodOptions.forEach(opt => {
+                    opt.classList.remove('active');
                 });
                 
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                });
+                // Add active class to clicked option
+                option.classList.add('active');
+                
+                // Show confirmation
+                const moodText = option.querySelector('div:last-child').textContent;
+                alert(`আপনার আজকের মেজাজ "${moodText}" হিসাবে সAVE করা হয়েছে! ধন্যবাদ আপনার অনুভূতি শেয়ার করার জন্য।`);
+            });
+        });
+
+        // Emergency Help Button
+        const emergencyBtn = document.querySelector('.btn-emergency');
+        emergencyBtn.addEventListener('click', () => {
+            if (confirm('আপনি কি নিশ্চিতভাবে বেনামী সাহায্য চাইতে চান? আপনার কোন ব্যক্তিগত তথ্য সংগ্রহ করা হবে না।')) {
+                alert('আপনার সাহায্যের অনুরোধটি গ্রহণ করা হয়েছে। একজন প্রশিক্ষিত স্বেচ্ছাসেবক ৪৮ ঘন্টার মধ্যে আপনার সাথে যোগাযোগ করবেন।');
+            }
+        });
+
+        // Smooth Scrolling for Navigation Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    navMenu.classList.remove('active');
+                }
             });
         });
     </script>
 </body>
+</html>
+
 </html>
